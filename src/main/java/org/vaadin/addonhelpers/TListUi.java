@@ -124,7 +124,7 @@ public class TListUi extends UI {
                                     Path packageDir = testroot.toPath().
                                     relativize(f.getParent());
                                     String packageName = packageDir.toString().
-                                    replaceAll("/", ".");
+                                    replaceAll("[/\\\\]", ".");
                                     if(!packageName.isEmpty()) {
                                         packageName += ".";
                                     }
