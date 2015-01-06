@@ -1,6 +1,7 @@
 package org.vaadin.addonhelpers;
 
 import com.vaadin.annotations.Widgetset;
+
 import java.io.File;
 
 import javax.servlet.ServletConfig;
@@ -19,6 +20,17 @@ import com.vaadin.server.VaadinServlet;
 
 public class TServer {
 
+    private String webAppPath = "target/testwebapp";
+
+    public TServer(String webAppPath) {
+        super();
+        this.webAppPath = webAppPath;
+    }
+
+    public TServer() {
+        super();
+    }
+
     public Server startServer() throws Exception {
         return startServer(getPort());
     }
@@ -32,30 +44,31 @@ public class TServer {
         final Connector connector = new SelectChannelConnector();
 
         connector.setPort(port);
-        server.setConnectors(new Connector[]{connector});
+        server.setConnectors(new Connector[] { connector });
 
         WebAppContext context = new WebAppContext();
         VaadinServlet vaadinServlet = new VaadinServlet() {
             @Override
-            public void init(ServletConfig servletConfig) throws ServletException {
+            public void init(ServletConfig servletConfig)
+                    throws ServletException {
                 super.init(servletConfig);
                 getService().addSessionInitListener(new SessionInitListener() {
                     @Override
-                    public void sessionInit(SessionInitEvent event) throws ServiceException {
+                    public void sessionInit(SessionInitEvent event)
+                            throws ServiceException {
                         event.getSession().addUIProvider(uiprovider);
                     }
                 });
             }
         };
 
-        ServletHolder servletHolder = new ServletHolder(
-                vaadinServlet);
+        ServletHolder servletHolder = new ServletHolder(vaadinServlet);
         Widgetset annotation = this.getClass().getAnnotation(Widgetset.class);
         if (annotation != null) {
             servletHolder.setInitParameter("widgetset", annotation.value());
         }
 
-        File file = new File("target/testwebapp");
+        File file = new File(webAppPath);
         context.setWar(file.getPath());
         context.setContextPath("/");
 
@@ -63,6 +76,10 @@ public class TServer {
         server.setHandler(context);
         server.start();
         return server;
+    }
+
+    public void setWebAppPath(String webAppPath) {
+        this.webAppPath = webAppPath;
     }
 
     protected int getPort() {
