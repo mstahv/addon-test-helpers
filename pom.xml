@@ -9,7 +9,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <vaadin.version>7.3.2</vaadin.version>
+        <vaadin.version>7.3.8</vaadin.version>
         <vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
 
         <!-- ZIP Manifest fields -->
@@ -76,13 +76,13 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.8.1</version>
+            <version>4.12</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.peimari</groupId>
-            <artifactId>maddon</artifactId>
-            <version>1.15</version>
+            <groupId>org.vaadin</groupId>
+            <artifactId>viritin</artifactId>
+            <version>1.22</version>
             <scope>test</scope>
             <type>jar</type>
         </dependency>
@@ -90,7 +90,7 @@
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-webapp</artifactId>
-            <version>8.1.12.v20130726</version>
+            <version>9.2.6.v20141205</version>
         </dependency>
 
     </dependencies>
