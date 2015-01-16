@@ -9,7 +9,7 @@ import javax.servlet.ServletException;
 
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.nio.SelectChannelConnector;
+import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.webapp.WebAppContext;
 
@@ -41,7 +41,7 @@ public class TServer {
 
         Server server = new Server();
 
-        final Connector connector = new SelectChannelConnector();
+        final ServerConnector connector = new ServerConnector(server);
 
         connector.setPort(port);
         server.setConnectors(new Connector[] { connector });
