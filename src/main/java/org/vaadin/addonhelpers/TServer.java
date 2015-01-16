@@ -69,6 +69,9 @@ public class TServer {
         }
 
         File file = new File(webAppPath);
+        if(!file.exists()) {
+            file.mkdirs();
+        }
         context.setWar(file.getPath());
         context.setContextPath("/");
 
