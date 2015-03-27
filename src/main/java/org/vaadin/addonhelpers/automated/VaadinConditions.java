@@ -14,7 +14,7 @@ public class VaadinConditions {
      * Taken, and fixed, from the (german) book "Vaadin".
      *
      * @see <a href="https://www.dpunkt.de/buecher/4526/vaadin.html">(german)
-     *      Book: Vaadin</>
+     *      Book: Vaadin</a>
      *
      */
     public static Predicate<WebDriver> ajaxCallsCompleted() {
