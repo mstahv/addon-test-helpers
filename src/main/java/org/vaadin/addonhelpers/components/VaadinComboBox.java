@@ -9,7 +9,7 @@ import org.openqa.selenium.*;
  * 
  * @see <a href=
  *      "http://www.testingminded.com/2014/08/selecting-item-from-vaadin-dropdown.html"
- *      >Blog with the original idea</>
+ *      >Blog with the original idea</a>
  * @author Daniel Nordhoff-Vergien
  */
 public class VaadinComboBox {
