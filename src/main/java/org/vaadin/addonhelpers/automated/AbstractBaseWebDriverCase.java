@@ -32,11 +32,24 @@ public class AbstractBaseWebDriverCase {
 
     }
 
+    /**
+     * Starts a new firefox browser.
+     */
     protected void startBrowser() {
-        if (driver != null) {
-            driver.quit();
+        startBrowser(new FirefoxDriver());
+    }
+
+    /**
+     * Starts a new browser.
+     * 
+     * @param driver
+     *            the WebDriver instance to use
+     */
+    protected void startBrowser(WebDriver driver) {
+        if (this.driver != null) {
+            this.driver.quit();
         }
-        driver = new FirefoxDriver();
+        this.driver = driver;
     }
 
     protected void clickNotification() {
@@ -107,15 +120,18 @@ public class AbstractBaseWebDriverCase {
                 }
 
                 public void captureScreenshot(String fileName) {
-                    try {// Insure directory is there
-                        new File("target/surefire-reports/screenshots/")
-                                .mkdirs();
-                        FileOutputStream out = new FileOutputStream(
-                                "target/surefire-reports/screenshots/"
-                                        + fileName + ".png");
-                        out.write(((TakesScreenshot) driver)
-                                .getScreenshotAs(OutputType.BYTES));
-                        out.close();
+                    try {
+                        if (driver instanceof TakesScreenshot) {
+                            // Insure directory is there
+                            new File("target/surefire-reports/screenshots/")
+                                    .mkdirs();
+                            FileOutputStream out = new FileOutputStream(
+                                    "target/surefire-reports/screenshots/"
+                                            + fileName + ".png");
+                            out.write(((TakesScreenshot) driver)
+                                    .getScreenshotAs(OutputType.BYTES));
+                            out.close();
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                         throw new RuntimeException(e);
