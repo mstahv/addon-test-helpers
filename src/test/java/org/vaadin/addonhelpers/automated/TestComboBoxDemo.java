@@ -30,6 +30,8 @@ public class TestComboBoxDemo extends AbstractWebDriverCase {
 
         comboBoxDemoPage.enterText("Value 20");
         assertThat(comboBoxDemoPage.getComboBoxValue(), is("Value 20"));
+        new WebDriverWait(driver, 30).until(VaadinConditions
+                .ajaxCallsCompleted());
         assertThat(comboBoxDemoPage.getLabelText(), is("Value 20"));
     }
 }
