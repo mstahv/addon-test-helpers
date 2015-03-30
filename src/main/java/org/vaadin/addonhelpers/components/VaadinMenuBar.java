@@ -20,12 +20,13 @@ public class VaadinMenuBar {
 
     }
 
-    public void mouseOver(String caption) {
+    public VaadinMenuBar mouseOver(String caption) {
         Actions action = new Actions(driver);
         WebElement we = menuBar
                 .findElement(By
                         .xpath("//span[@class=\"v-menubar-menuitem-caption\" and contains(text(), '"
                                 + caption + "')]"));
         action.moveToElement(we).build().perform();
+        return this;
     }
 }
