@@ -20,6 +20,10 @@ public class VaadinComboBox {
         this.webElement = webElement;
     }
 
+    public String getValue() {
+        return getInput().getAttribute("value");
+    }
+
     public void selectItemFromFilter(String searchItem) {
         List<WebElement> menuItems = getMenuItemsFromFilter();
 

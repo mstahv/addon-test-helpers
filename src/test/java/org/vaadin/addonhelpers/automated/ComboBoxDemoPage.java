@@ -17,6 +17,11 @@ public class ComboBoxDemoPage {
         return label.getText();
     }
 
+    public String getComboBoxValue()
+    {
+        return getVaadinComboBox().getValue();
+        
+    }
     public void enterText(String text) {
         getVaadinComboBox().getInput().clear();
         getVaadinComboBox().typeText(text);

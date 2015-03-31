@@ -1,5 +1,7 @@
 package org.vaadin.addonhelpers;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Notification;
@@ -27,8 +29,10 @@ public abstract class AbstractTest extends UI {
     @Override
     protected void init(VaadinRequest request) {
         setup();
-        Notification.show(getDescription(),
-                Notification.Type.WARNING_MESSAGE);
+        if (StringUtils.isNotBlank(getDescription())) {
+            Notification.show(getDescription(),
+                    Notification.Type.WARNING_MESSAGE);
+        }
     }
     
     
