@@ -5,8 +5,6 @@ import java.util.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.NoSuchElementException;
 
-import com.vaadin.ui.Notification.Type;
-
 /**
  * Wrapper around a selenium WebElement for a {@link com.vaadin.ui.Notification}
  * .
@@ -17,11 +15,15 @@ import com.vaadin.ui.Notification.Type;
  * 
  * @author Daniel Nordhoff-Vergien
  */
-public class VaadinNotifications {
+public class VaadinNotification {
     private final static String BASE_CLASS = "v-Notification";
     private final WebElement webElement;
     private final String caption;
     private final String description;
+
+    public enum Type {
+        HUMANIZED_MESSAGE, WARNING_MESSAGE, ERROR_MESSAGE, TRAY_NOTIFICATION
+    }
 
     /**
      * Returns a list of notifications of the given type.
@@ -31,10 +33,10 @@ public class VaadinNotifications {
      * @param driver
      * @return A list of notifications.
      */
-    public static List<VaadinNotifications> get(Type type, WebDriver driver) {
+    public static List<VaadinNotification> get(Type type, WebDriver driver) {
         List<WebElement> notifications = driver.findElements(By
                 .className(getClassName(type)));
-        List<VaadinNotifications> vaadinNotifications = new ArrayList<VaadinNotifications>();
+        List<VaadinNotification> vaadinNotification = new ArrayList<VaadinNotification>();
         for (WebElement notification : notifications) {
             String notificationCaption = null;
             try {
@@ -50,15 +52,14 @@ public class VaadinNotifications {
             } catch (NoSuchElementException e) {
                 // This happens if there is no description
             }
-            vaadinNotifications
-                    .add(new VaadinNotifications(notificationCaption,
-                            notificationDescription, notification));
+            vaadinNotification.add(new VaadinNotification(notificationCaption,
+                    notificationDescription, notification));
         }
-        return vaadinNotifications;
+        return vaadinNotification;
 
     }
 
-    public VaadinNotifications(String caption, String description,
+    public VaadinNotification(String caption, String description,
             WebElement webElement) {
         super();
         this.caption = caption;
