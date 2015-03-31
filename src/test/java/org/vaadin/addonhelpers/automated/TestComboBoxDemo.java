@@ -20,18 +20,22 @@ public class TestComboBoxDemo extends AbstractWebDriverCase {
         waitForLoading();
         ComboBoxDemoPage comboBoxDemoPage = new ComboBoxDemoPage();
         PageFactory.initElements(driver, comboBoxDemoPage);
+        new WebDriverWait(driver, 30).until(VaadinConditions
+                .ajaxCallsCompleted());
 
         assertThat(comboBoxDemoPage.getComboBoxValue(), is(""));
         assertThat(comboBoxDemoPage.getLabelText(), is(""));
 
         comboBoxDemoPage.selectItem(2);
+        new WebDriverWait(driver, 30).until(VaadinConditions
+                .ajaxCallsCompleted());
         assertThat(comboBoxDemoPage.getComboBoxValue(), is("Value 1"));
         assertThat(comboBoxDemoPage.getLabelText(), is("Value 1"));
 
         comboBoxDemoPage.enterText("Value 20");
-        assertThat(comboBoxDemoPage.getComboBoxValue(), is("Value 20"));
         new WebDriverWait(driver, 30).until(VaadinConditions
                 .ajaxCallsCompleted());
+        assertThat(comboBoxDemoPage.getComboBoxValue(), is("Value 20"));
         assertThat(comboBoxDemoPage.getLabelText(), is("Value 20"));
     }
 }
