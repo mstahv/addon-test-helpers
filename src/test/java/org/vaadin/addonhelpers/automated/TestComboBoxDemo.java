@@ -18,8 +18,8 @@ public class TestComboBoxDemo extends AbstractWebDriverCase {
                 .to(new URL(
                         "http://localhost:5678/org.vaadin.addonhelpers.manual.demo.ComboBoxDemo"));
         waitForLoading();
-        ComboBoxDemoPage comboBoxDemoPage = new ComboBoxDemoPage();
-        PageFactory.initElements(driver, comboBoxDemoPage);
+        ComboBoxDemoPage comboBoxDemoPage = PageFactory.initElements(driver,
+                ComboBoxDemoPage.class);
         new WebDriverWait(driver, 30).until(VaadinConditions
                 .ajaxCallsCompleted());
 
@@ -37,5 +37,8 @@ public class TestComboBoxDemo extends AbstractWebDriverCase {
                 .ajaxCallsCompleted());
         assertThat(comboBoxDemoPage.getComboBoxValue(), is("Value 20"));
         assertThat(comboBoxDemoPage.getLabelText(), is("Value 20"));
+
+        comboBoxDemoPage.enterText2("other Value 20");
+        assertThat(comboBoxDemoPage.getComboBoxValue2(), is("other Value 20"));
     }
 }
