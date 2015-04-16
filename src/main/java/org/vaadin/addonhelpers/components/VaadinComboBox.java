@@ -69,7 +69,7 @@ public class VaadinComboBox {
 
     private List<WebElement> getMenuItemsFromFilter() {
         By suggestMenuDropdownButtonLocator = By
-                .xpath("//div[contains(@class, 'v-filterselect-button')]");
+                .cssSelector("div .v-filterselect-button");
         By suggestMenuLocator = By
                 .xpath("//div[contains(@class, 'v-filterselect-suggestmenu')]");
         By menuItemLocator = By.xpath("//td[contains(@class, 'gwt-MenuItem')]");
