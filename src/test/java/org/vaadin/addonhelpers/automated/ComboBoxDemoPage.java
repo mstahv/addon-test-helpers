@@ -34,12 +34,14 @@ public class ComboBoxDemoPage {
         return getVaadinComboBox2().getValue();
     }
 
-    public void enterText(String text) {
+    public void enterText(String text, boolean pressEnter) {
         getVaadinComboBox().getInput().clear();
         getVaadinComboBox().typeText(text);
-        new WebDriverWait(driver, 30).until(VaadinConditions
-                .ajaxCallsCompleted());
-        getVaadinComboBox().getInput().sendKeys(Keys.ENTER);
+        new WebDriverWait(driver, 30)
+                .until(VaadinConditions.ajaxCallsCompleted());
+        if (pressEnter) {
+            getVaadinComboBox().getInput().sendKeys(Keys.ENTER);
+        }
     }
 
     public void selectItem(String item) {
@@ -71,9 +73,9 @@ public class ComboBoxDemoPage {
     public void enterText2(String text) {
         getVaadinComboBox2().getInput().clear();
         getVaadinComboBox2().typeText(text);
-        new WebDriverWait(driver, 30).until(VaadinConditions
-                .ajaxCallsCompleted());
+        new WebDriverWait(driver, 30)
+                .until(VaadinConditions.ajaxCallsCompleted());
         getVaadinComboBox2().getInput().sendKeys(Keys.ENTER);
-        
+
     }
 }

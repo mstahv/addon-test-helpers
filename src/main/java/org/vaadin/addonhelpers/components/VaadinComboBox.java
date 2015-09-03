@@ -48,8 +48,8 @@ public class VaadinComboBox {
     }
 
     public WebElement getInput() {
-        WebElement input = webElement.findElement(By
-                .className("v-filterselect-input"));
+        WebElement input = webElement
+                .findElement(By.className("v-filterselect-input"));
         return input;
     }
 
@@ -74,12 +74,20 @@ public class VaadinComboBox {
                 .xpath("//div[contains(@class, 'v-filterselect-suggestmenu')]");
         By menuItemLocator = By.xpath("//td[contains(@class, 'gwt-MenuItem')]");
 
-        WebElement suggestMenuDropDown = webElement
-                .findElement(suggestMenuDropdownButtonLocator);
+        boolean suggestMenuVisible;
+        try {
+            webElement.findElement(suggestMenuLocator);
+            suggestMenuVisible = true;
+        } catch (NoSuchElementException e) {
+            suggestMenuVisible = false;
+        }
+        if (!suggestMenuVisible) {
+            WebElement suggestMenuDropDown = webElement
+                    .findElement(suggestMenuDropdownButtonLocator);
 
-        suggestMenuDropDown.click();
-
-        return webElement.findElement(suggestMenuLocator).findElements(
-                menuItemLocator);
+            suggestMenuDropDown.click();
+        }
+        return webElement.findElement(suggestMenuLocator)
+                .findElements(menuItemLocator);
     }
 }
