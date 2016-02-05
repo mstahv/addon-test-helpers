@@ -17,10 +17,13 @@ import com.vaadin.server.ServiceException;
 import com.vaadin.server.SessionInitEvent;
 import com.vaadin.server.SessionInitListener;
 import com.vaadin.server.VaadinServlet;
+import com.vaadin.server.VaadinServletService;
 
 public class TServer {
 
     private String webAppPath = "target/testwebapp";
+
+    final AbstractUIProviderImpl uiprovider = new AbstractUIProviderImpl();
 
     public TServer(String webAppPath) {
         super();
@@ -37,14 +40,12 @@ public class TServer {
 
     public Server startServer(int port) throws Exception {
 
-        final AbstractUIProviderImpl uiprovider = new AbstractUIProviderImpl();
-
         Server server = new Server();
 
         final ServerConnector connector = new ServerConnector(server);
 
         connector.setPort(port);
-        server.setConnectors(new Connector[] { connector });
+        server.setConnectors(new Connector[]{connector});
 
         WebAppContext context = new WebAppContext();
         VaadinServlet vaadinServlet = new VaadinServlet() {
@@ -52,14 +53,10 @@ public class TServer {
             public void init(ServletConfig servletConfig)
                     throws ServletException {
                 super.init(servletConfig);
-                getService().addSessionInitListener(new SessionInitListener() {
-                    @Override
-                    public void sessionInit(SessionInitEvent event)
-                            throws ServiceException {
-                        event.getSession().addUIProvider(uiprovider);
-                    }
-                });
+                final VaadinServletService service = getService();
+                configureVaadinService(service);
             }
+
         };
 
         ServletHolder servletHolder = new ServletHolder(vaadinServlet);
@@ -69,13 +66,14 @@ public class TServer {
         }
 
         File file = new File(webAppPath);
-        if(!file.exists()) {
+        if (!file.exists()) {
             file.mkdirs();
         }
         context.setWar(file.getPath());
         context.setContextPath("/");
 
         context.addServlet(servletHolder, "/*");
+        configure(context, server);
         server.setHandler(context);
         server.start();
         return server;
@@ -88,4 +86,31 @@ public class TServer {
     protected int getPort() {
         return 9998;
     }
+
+    /**
+     * Hook for additional configuration.
+     *
+     * @param context the context
+     * @param server the server
+     */
+    protected void configure(WebAppContext context, Server server) {
+
+    }
+
+    /**
+     * Hook to add additional configuration for VaadinServletService
+     * 
+     * @param service the VaadinServletService
+     */
+    protected void configureVaadinService(
+            final VaadinServletService service) {
+        service.addSessionInitListener(new SessionInitListener() {
+            @Override
+            public void sessionInit(SessionInitEvent event)
+                    throws ServiceException {
+                event.getSession().addUIProvider(uiprovider);
+            }
+        });
+    }
+
 }
