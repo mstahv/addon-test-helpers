@@ -111,5 +111,6 @@ public class TestSlowUIDemo extends AbstractWebDriverCase {
                         "http://localhost:5678/org.vaadin.addonhelpers.manual.demo.SlowUIDemo"));
         page = new SlowUIDemoPage();
         PageFactory.initElements(driver, page);
+        waitForLoading();
     }
 }

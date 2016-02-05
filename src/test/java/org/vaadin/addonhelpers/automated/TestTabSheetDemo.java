@@ -24,6 +24,7 @@ public class TestTabSheetDemo extends AbstractWebDriverCase {
                         + TabSheetDemo.class.getCanonicalName()));
         page = new TabSheetDemoPage();
         PageFactory.initElements(driver, page);
+        waitForLoading();
     }
 
     @Test

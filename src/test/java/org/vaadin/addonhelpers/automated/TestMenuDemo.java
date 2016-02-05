@@ -19,6 +19,7 @@ public class TestMenuDemo extends AbstractWebDriverCase {
                 new URL("http://localhost:5678/") + MenuDemo.class.getName());
 
         page = PageFactory.initElements(driver, MenuDemoPage.class);
+        waitForLoading();
     }
 
     @Test
