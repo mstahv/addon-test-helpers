@@ -60,7 +60,7 @@ public class TServer {
         };
 
         ServletHolder servletHolder = new ServletHolder(vaadinServlet);
-        Widgetset annotation = this.getClass().getAnnotation(Widgetset.class);
+        Widgetset annotation = loadWidgetsetAnnotation();
         if (annotation != null) {
             servletHolder.setInitParameter("widgetset", annotation.value());
         }
@@ -77,6 +77,19 @@ public class TServer {
         server.setHandler(context);
         server.start();
         return server;
+    }
+
+    protected Widgetset loadWidgetsetAnnotation() {
+        Widgetset widgetset =  this.getClass().getAnnotation(Widgetset.class);
+        if(widgetset == null) {
+            try {
+                Class<?> configClass = this.getClass().getClassLoader().loadClass("org.vaadin.addonhelpers.Config");
+                widgetset = configClass.getAnnotation(Widgetset.class);
+            } catch (ClassNotFoundException e) {
+                // Thats ok, configClass might not be present
+            }
+        }
+        return widgetset;
     }
 
     public void setWebAppPath(String webAppPath) {
