@@ -35,6 +35,9 @@ public class AbstractUIProviderImpl extends UIProvider {
         if(name.startsWith("/")) {
             name = name.substring(1);
         }
+        if(name.contains("/")) {
+            name = name.substring(0,name.indexOf("/"));
+        }
         if (!"".equals(name) && !name.contains(".ico") && name.matches("[A-Za-z0-9.]*")) {
             try {
                 String className = name;
