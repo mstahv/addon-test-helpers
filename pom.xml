@@ -4,7 +4,7 @@
     <groupId>org.vaadin</groupId>
     <artifactId>addon-test-helpers</artifactId>
     <packaging>jar</packaging>
-    <version>1.8-SNAPSHOT</version>
+    <version>1.8</version>
     <name>Addon test helpers</name>
 
     <properties>
@@ -25,7 +25,7 @@
         <url>git://github.com/mstahv/addon-test-helpers.git</url>
         <connection>scm:git:git://github.com/mstahv/addon-test-helpers.git</connection>
         <developerConnection>scm:git:ssh://git@github.com:/mstahv/addon-test-helpers.git</developerConnection>
-        <tag>addon-test-helpers</tag>
+        <tag>addon-test-helpers-1.8</tag>
     </scm>
 
     <licenses>
