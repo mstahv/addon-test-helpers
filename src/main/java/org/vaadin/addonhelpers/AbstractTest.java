@@ -1,5 +1,6 @@
 package org.vaadin.addonhelpers;
 
+import com.vaadin.annotations.Theme;
 import org.apache.commons.lang3.StringUtils;
 
 import com.vaadin.server.*;
@@ -8,6 +9,7 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
+@Theme("valo")
 public abstract class AbstractTest extends UI {
 
     protected VerticalLayout content;

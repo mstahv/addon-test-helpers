@@ -15,6 +15,7 @@
  */
 package org.vaadin.addonhelpers;
 
+import com.vaadin.annotations.Theme;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.IndexedContainer;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
@@ -43,6 +44,7 @@ import java.util.logging.Logger;
  *
  * @author mattitahvonenitmill
  */
+@Theme("valo")
 public class TListUi extends UI {
 
     private IndexedContainer testClassess;
