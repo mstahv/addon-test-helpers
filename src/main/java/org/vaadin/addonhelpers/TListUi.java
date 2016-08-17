@@ -157,9 +157,8 @@ public class TListUi extends UI {
 
     static void addTest(IndexedContainer indexedContainer, String simpleName,
                     Class<?> forName) throws InstantiationException, IllegalAccessException {
-        if (AbstractTest.class
-                .isAssignableFrom(forName)) {
-            AbstractTest newInstance = (AbstractTest) forName.newInstance();
+        if (UI.class.isAssignableFrom(forName)) {
+            UI newInstance = (UI) forName.newInstance();
             Object id = indexedContainer.addItem();
             Item item = indexedContainer.getItem(id);
             item.getItemProperty("clazz").setValue(forName);
