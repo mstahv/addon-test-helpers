@@ -100,6 +100,7 @@ public class TListUi extends UI {
         verticalLayout.addComponent(table);
         verticalLayout.setSizeFull();
         verticalLayout.setExpandRatio(table, 1);
+        verticalLayout.setMargin(true);
         setContent(verticalLayout);
     }
 
