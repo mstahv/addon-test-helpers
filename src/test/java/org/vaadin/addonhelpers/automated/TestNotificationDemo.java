@@ -11,7 +11,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.vaadin.addonhelpers.components.VaadinNotification;
 import org.vaadin.addonhelpers.manual.demo.NotificationDemo;
 
-import com.vaadin.ui.Notification;
 
 public class TestNotificationDemo extends AbstractWebDriverCase {
     private NotificationDemoPage page;
@@ -34,7 +33,7 @@ public class TestNotificationDemo extends AbstractWebDriverCase {
     @Test
     public void test_warn() {
         page.clickWarnButton();
-
+        waitForLoading();
         List<VaadinNotification> warnings = VaadinNotification.get(
                 VaadinNotification.Type.WARNING_MESSAGE, driver);
         assertThat(warnings.get(0).getCaption(), is("Warning"));
@@ -50,6 +49,7 @@ public class TestNotificationDemo extends AbstractWebDriverCase {
     @Test
     public void test_error() {
         page.clickErrorButton();
+        waitForLoading();
 
         List<VaadinNotification> warnings = VaadinNotification.get(
                 VaadinNotification.Type.ERROR_MESSAGE, driver);
@@ -66,6 +66,8 @@ public class TestNotificationDemo extends AbstractWebDriverCase {
     @Test
     public void test_tray() {
         page.clickTrayButton();
+        
+        waitForLoading();
 
         List<VaadinNotification> warnings = VaadinNotification.get(
                 VaadinNotification.Type.TRAY_NOTIFICATION, driver);

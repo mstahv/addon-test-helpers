@@ -119,6 +119,7 @@ public class VaadinOptionGroup {
     public void click(int index) {
         List<WebElement> selectOptions = optionGroup.findElements(By
                 .cssSelector(".v-select-option"));
-        selectOptions.get(index).findElement(By.tagName("input")).click();
+        // click on label as with Valo it is not that simple....
+        selectOptions.get(index).findElement(By.tagName("label")).click();
     }
 }

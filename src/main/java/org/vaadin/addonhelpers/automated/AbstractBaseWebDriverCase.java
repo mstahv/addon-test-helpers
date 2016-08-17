@@ -57,6 +57,8 @@ public class AbstractBaseWebDriverCase {
             WebElement notification = driver.findElement(By
                     .className("v-Notification"));
             notification.click();
+            // wait for animations...
+            sleep(1000);
         } catch (NoSuchElementException e) {
             throw e;
         }
@@ -71,9 +73,9 @@ public class AbstractBaseWebDriverCase {
                 boolean stopWait = false;
                 try {
                     WebElement findElement = d.findElement(By
-                            .className("v-loading-indicator"));
-                    String cssValueDisplay = findElement.getCssValue("display");
-                    if (StringUtils.equals("none", cssValueDisplay)) {
+                            .cssSelector(".v-loading-indicator"));
+                    if (!findElement.isDisplayed()) {
+                        sleep(200);
                         stopWait = true;
                     }
                 } catch (NoSuchElementException e) {

@@ -1,6 +1,8 @@
 package org.vaadin.addonhelpers.components;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.openqa.selenium.*;
 
@@ -86,6 +88,12 @@ public class VaadinComboBox {
                     .findElement(suggestMenuDropdownButtonLocator);
 
             suggestMenuDropDown.click();
+        }
+        try {
+            // FIXME, this is needed due to animations/server visit in certain cases
+            Thread.sleep(500);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(VaadinComboBox.class.getName()).log(Level.SEVERE, null, ex);
         }
         return webElement.findElement(suggestMenuLocator)
                 .findElements(menuItemLocator);

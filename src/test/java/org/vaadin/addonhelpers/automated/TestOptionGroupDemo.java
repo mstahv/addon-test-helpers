@@ -42,9 +42,11 @@ public class TestOptionGroupDemo extends AbstractWebDriverCase {
 
     @Test
     public void testSelectOptions() {
+        waitForLoading();
         VaadinOptionGroup singleOptionGroup = page.getSingleOptionGroup();
 
         singleOptionGroup.click(0);
+        waitForLoading();
         assertThat(singleOptionGroup.getOptions(), is(Arrays.asList(
                 new VaadinOptionGroup.Option(true, true, "Single"),
                 new VaadinOptionGroup.Option(false, false, "Sola"),

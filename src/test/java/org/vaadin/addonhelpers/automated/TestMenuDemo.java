@@ -20,6 +20,7 @@ public class TestMenuDemo extends AbstractWebDriverCase {
 
         page = PageFactory.initElements(driver, MenuDemoPage.class);
         waitForLoading();
+        clickNotification();
     }
 
     @Test
