@@ -48,16 +48,7 @@ public class TServer {
         server.setConnectors(new Connector[]{connector});
 
         WebAppContext context = new WebAppContext();
-        VaadinServlet vaadinServlet = new VaadinServlet() {
-            @Override
-            public void init(ServletConfig servletConfig)
-                    throws ServletException {
-                super.init(servletConfig);
-                final VaadinServletService service = getService();
-                configureVaadinService(service);
-            }
-
-        };
+        VaadinServlet vaadinServlet = createServlet();
 
         ServletHolder servletHolder = new ServletHolder(vaadinServlet);
         Widgetset annotation = loadWidgetsetAnnotation();
@@ -77,6 +68,11 @@ public class TServer {
         server.setHandler(context);
         server.start();
         return server;
+    }
+
+    protected VaadinServlet createServlet() {
+        VaadinServlet vaadinServlet = new VaadinTestServlet();
+        return vaadinServlet;
     }
 
     protected Widgetset loadWidgetsetAnnotation() {
@@ -124,6 +120,20 @@ public class TServer {
                 event.getSession().addUIProvider(uiprovider);
             }
         });
+    }
+
+    private class VaadinTestServlet extends VaadinServlet {
+
+        public VaadinTestServlet() {
+        }
+
+        @Override
+        public void init(ServletConfig servletConfig)
+                throws ServletException {
+            super.init(servletConfig);
+            final VaadinServletService service = getService();
+            configureVaadinService(service);
+        }
     }
 
 }
