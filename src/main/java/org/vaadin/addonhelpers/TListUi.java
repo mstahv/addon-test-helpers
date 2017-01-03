@@ -16,28 +16,23 @@
 package org.vaadin.addonhelpers;
 
 import com.vaadin.annotations.Theme;
-import com.vaadin.v7.data.Item;
-import com.vaadin.v7.data.util.IndexedContainer;
-import com.vaadin.v7.event.FieldEvents.TextChangeEvent;
-import com.vaadin.v7.event.FieldEvents.TextChangeListener;
-import com.vaadin.server.ExternalResource;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.shared.ui.ValueChangeMode;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Link;
-import com.vaadin.v7.ui.Table;
+import com.vaadin.ui.Grid;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.renderers.HtmlRenderer;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
-import java.nio.file.FileVisitor;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -48,7 +43,36 @@ import java.util.logging.Logger;
 @Theme("valo")
 public class TListUi extends UI {
 
-    private IndexedContainer testClassess;
+    public static class TestDetails {
+
+        private Class clazz;
+        private String name;
+        private String description;
+
+        public TestDetails(Class clazz, String name) {
+            this.clazz = clazz;
+            this.name = name;
+        }
+
+        public Class getClazz() {
+            return clazz;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+    }
+
+    private List<TestDetails> testClassess;
 
     @Override
     protected void init(VaadinRequest request) {
@@ -60,54 +84,33 @@ public class TListUi extends UI {
             return;
         }
         testClassess = listTestClasses();
-        Table table = new Table("Test cases", testClassess);
-        table.setVisibleColumns("name", "description");
-        table.addGeneratedColumn("name", new Table.ColumnGenerator() {
-            public Object generateCell(Table source, Object itemId,
-                    Object columnId) {
-                String name = (String) source.getItem(itemId).getItemProperty(
-                        columnId).getValue();
-                Class clazz = (Class) source.getItem(itemId).getItemProperty("clazz").getValue();
-                Link link = new Link();
-                link.setResource(new ExternalResource("/" + clazz.getName()));
-                link.setCaption(name);
-                link.setTargetName("_new");
-                return link;
-            }
-        });
-        table.addGeneratedColumn("description", new Table.ColumnGenerator() {
-            public Object generateCell(Table source, Object itemId,
-                    Object columnId) {
-                String description = (String) source.getItem(itemId).
-                        getItemProperty(columnId).getValue();
-                return new Label(description);
-            }
-        });
-        table.setSizeFull();
-        table.setColumnExpandRatio("description", 1);
+        Grid<TestDetails> grid = new Grid();
+        grid.addColumn(v -> String.format("<a href='/%s' target='_new'>%s</a>", v.getClazz().getName(),v.getName()), new HtmlRenderer());
+        // TODO how to make this wrap/truncated by default???
+        grid.addColumn(TestDetails::getDescription).setCaption("description").setExpandRatio(1);
+        grid.setSizeFull();
+        grid.setItems(testClassess);
         VerticalLayout verticalLayout = new VerticalLayout();
         TextField filter = new TextField();
         filter.setPlaceholder("Filter list");
         filter.addValueChangeListener(e -> {
-                String text = e.getValue();
-                testClassess.removeAllContainerFilters();
-                testClassess.addContainerFilter("name", text, true, false);
+            String f = e.getValue();
+            grid.setItems(testClassess.stream().filter(c -> c.getName().contains(f)));
         });
         filter.setValueChangeMode(ValueChangeMode.LAZY);
         verticalLayout.addComponent(filter);
         filter.focus();
-        verticalLayout.addComponent(table);
+        verticalLayout.addComponent(grid);
         verticalLayout.setSizeFull();
-        verticalLayout.setExpandRatio(table, 1);
+        verticalLayout.setExpandRatio(grid, 1);
         verticalLayout.setMargin(true);
         setContent(verticalLayout);
     }
 
-    public static IndexedContainer listTestClasses() {
-        final IndexedContainer indexedContainer = new IndexedContainer();
-        indexedContainer.addContainerProperty("name", String.class, "");
-        indexedContainer.addContainerProperty("description", String.class, "");
-        indexedContainer.addContainerProperty("clazz", Class.class, null);
+    public static List<TestDetails> listTestClasses() {
+
+        List<TestDetails> l = new ArrayList<>();
+
         final File testroot = getTestRoot();
 
         if (testroot.exists()) {
@@ -115,58 +118,54 @@ public class TListUi extends UI {
                 Files.walkFileTree(testroot.toPath(),
                         new SimpleFileVisitor<Path>() {
 
-                            @Override
-                            public FileVisitResult visitFile(Path f,
-                                    BasicFileAttributes attrs) {
-                                if(!f.toString().endsWith(".java")) {
-                                    return FileVisitResult.CONTINUE;
-                                }
-                                try {
-                                    String name = f.getFileName().toString().replace(".java", "");
-                                    Path packageDir = testroot.toPath().
+                    @Override
+                    public FileVisitResult visitFile(Path f,
+                            BasicFileAttributes attrs) {
+                        if (!f.toString().endsWith(".java")) {
+                            return FileVisitResult.CONTINUE;
+                        }
+                        try {
+                            String name = f.getFileName().toString().replace(".java", "");
+                            Path packageDir = testroot.toPath().
                                     relativize(f.getParent());
-                                    String packageName = packageDir.toString().
+                            String packageName = packageDir.toString().
                                     replaceAll("[/\\\\]", ".");
-                                    if(!packageName.isEmpty()) {
-                                        packageName += ".";
-                                    }
-
-                                    Class<?> forName = Class.forName(
-                                            packageName + name);
-                                    addTest(indexedContainer, name, forName);
-                                } catch (Exception e) {
-                                    // e.printStackTrace();
-                                    // e.printStackTrace();
-                                }
-                                return FileVisitResult.CONTINUE;
+                            if (!packageName.isEmpty()) {
+                                packageName += ".";
                             }
 
+                            Class<?> forName = Class.forName(
+                                    packageName + name);
+
+                            addTest(l, name, forName);
+                        } catch (Exception e) {
+                            // e.printStackTrace();
+                            // e.printStackTrace();
                         }
+                        return FileVisitResult.CONTINUE;
+                    }
+
+                }
                 );
             } catch (IOException ex) {
                 Logger.getLogger(TListUi.class.getName()).
                         log(Level.SEVERE, null, ex);
             }
         }
-        return indexedContainer;
+        return l;
     }
 
     protected static File getTestRoot() {
         return new File("src/test/java/");
     }
 
-    static void addTest(IndexedContainer indexedContainer, String simpleName,
-                    Class<?> forName) throws InstantiationException, IllegalAccessException {
+    static void addTest(List<TestDetails> indexedContainer, String simpleName,
+            Class<?> forName) throws InstantiationException, IllegalAccessException {
         if (UI.class.isAssignableFrom(forName)) {
             UI newInstance = (UI) forName.newInstance();
-            Object id = indexedContainer.addItem();
-            Item item = indexedContainer.getItem(id);
-            item.getItemProperty("clazz").setValue(forName);
-            item.getItemProperty(
-                    "name").setValue(simpleName);
-            item.getItemProperty(
-                    "description").setValue(newInstance.
-                            getDescription());
+            TestDetails testDetails = new TestDetails(forName, simpleName);
+            indexedContainer.add(testDetails);
+            testDetails.setDescription(newInstance.getDescription());
         }
     }
 
