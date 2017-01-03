@@ -13,6 +13,7 @@ public class VaadinConditions {
      * <p>
      * Taken, and fixed, from the (german) book "Vaadin".
      *
+     * @return the waiting condition
      * @see <a href="https://www.dpunkt.de/buecher/4526/vaadin.html">(german)
      *      Book: Vaadin</a>
      *

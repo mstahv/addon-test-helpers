@@ -30,7 +30,7 @@ public abstract class AbstractTest extends UI {
      * Sets the size of the content. Override to change from
      * {@link Sizeable#setSizeFull()}
      * 
-     * @param content
+     * @param content the content component
      */
     public void setContentSize(Component content) {
         content.setSizeFull();

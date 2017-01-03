@@ -30,13 +30,13 @@ public class VaadinNotification {
      * 
      * @param type
      *            the notification type
-     * @param driver
+     * @param driver the driver used to lookup notifications
      * @return A list of notifications.
      */
     public static List<VaadinNotification> get(Type type, WebDriver driver) {
         List<WebElement> notifications = driver.findElements(By
                 .className(getClassName(type)));
-        List<VaadinNotification> vaadinNotification = new ArrayList<VaadinNotification>();
+        List<VaadinNotification> vaadinNotification = new ArrayList<>();
         for (WebElement notification : notifications) {
             String notificationCaption = null;
             try {

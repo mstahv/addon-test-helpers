@@ -7,7 +7,7 @@ import org.openqa.selenium.*;
 
 /**
  * Wrapper around a {@link org.openqa.selenium.WebElement} representing a
- * {@link com.vaadin.ui.OptionGroup}.
+ * {@link com.vaadin.v7.ui.OptionGroup}.
  * 
  * @author Daniel Nordhoff-Vergien
  *
