@@ -1,8 +1,6 @@
 package org.vaadin.addonhelpers.manual.demo;
 
 import org.vaadin.addonhelpers.AbstractTest;
-import org.vaadin.viritin.button.MButton;
-import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
@@ -18,7 +16,7 @@ public class SlowUIDemo extends AbstractTest {
     public Component getTestComponent() {
         final Label label = new Label();
         label.setId("result");
-        MButton slowButton = new MButton("Compute", new ClickListener() {
+        Button slowButton = new Button("Compute", new ClickListener() {
 
             @Override
             public void buttonClick(ClickEvent event) {
@@ -33,7 +31,7 @@ public class SlowUIDemo extends AbstractTest {
         });
         slowButton.setId("slowComputeButton");
 
-        MButton fastButton = new MButton("Compute fast", new ClickListener() {
+        Button fastButton = new Button("Compute fast", new ClickListener() {
 
             @Override
             public void buttonClick(ClickEvent event) {
@@ -41,6 +39,6 @@ public class SlowUIDemo extends AbstractTest {
             }
         });
         fastButton.setId("fastComputeButton");
-        return new MVerticalLayout(slowButton, fastButton, label);
+        return new VerticalLayout(slowButton, fastButton, label);
     }
 }

@@ -16,15 +16,16 @@
 package org.vaadin.addonhelpers;
 
 import com.vaadin.annotations.Theme;
-import com.vaadin.data.Item;
-import com.vaadin.data.util.IndexedContainer;
-import com.vaadin.event.FieldEvents.TextChangeEvent;
-import com.vaadin.event.FieldEvents.TextChangeListener;
+import com.vaadin.v7.data.Item;
+import com.vaadin.v7.data.util.IndexedContainer;
+import com.vaadin.v7.event.FieldEvents.TextChangeEvent;
+import com.vaadin.v7.event.FieldEvents.TextChangeListener;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.server.VaadinRequest;
+import com.vaadin.shared.ui.ValueChangeMode;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Link;
-import com.vaadin.ui.Table;
+import com.vaadin.v7.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
@@ -86,15 +87,13 @@ public class TListUi extends UI {
         table.setColumnExpandRatio("description", 1);
         VerticalLayout verticalLayout = new VerticalLayout();
         TextField filter = new TextField();
-        filter.setInputPrompt("Filter list");
-        filter.addTextChangeListener(new TextChangeListener() {
-            @Override
-            public void textChange(TextChangeEvent event) {
-                String text = event.getText();
+        filter.setPlaceholder("Filter list");
+        filter.addValueChangeListener(e -> {
+                String text = e.getValue();
                 testClassess.removeAllContainerFilters();
                 testClassess.addContainerFilter("name", text, true, false);
-            }
         });
+        filter.setValueChangeMode(ValueChangeMode.LAZY);
         verticalLayout.addComponent(filter);
         filter.focus();
         verticalLayout.addComponent(table);

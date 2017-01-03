@@ -6,8 +6,6 @@ import java.util.TreeSet;
 
 import org.vaadin.addonhelpers.AbstractTest;
 
-import com.vaadin.data.Property.ValueChangeEvent;
-import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
@@ -22,9 +20,8 @@ public class ComboBoxDemo extends AbstractTest {
     @Override
     public Component getTestComponent() {
         VerticalLayout layout = new VerticalLayout();
-        ComboBox comboBox = new ComboBox("A combobox", getContainer("Value "));
+        ComboBox<String> comboBox = new ComboBox("A combobox", getContainer("Value "));
         comboBox.setId("combobox-1");
-        comboBox.setNewItemsAllowed(true);
 
         ComboBox comboBox2 = new ComboBox("Another combobox",
                 getContainer("other Value "));
@@ -36,17 +33,12 @@ public class ComboBoxDemo extends AbstractTest {
         selection.setId("selection");
         selection.setCaption("Selection");
         layout.addComponent(selection);
-
-        comboBox.addValueChangeListener(new ValueChangeListener() {
-            @Override
-            public void valueChange(ValueChangeEvent event) {
-                String value = null;
-                if (event.getProperty().getValue() != null) {
-                    value = event.getProperty().getValue().toString();
-                }
-                selection.setValue(value);
-            }
+        
+        comboBox.addValueChangeListener(event->{
+            String value = event.getValue();
+            selection.setValue(value);
         });
+
         return layout;
     }
 

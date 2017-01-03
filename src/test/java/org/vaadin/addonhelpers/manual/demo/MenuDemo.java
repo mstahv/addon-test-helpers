@@ -1,9 +1,7 @@
 package org.vaadin.addonhelpers.manual.demo;
 
 import org.vaadin.addonhelpers.AbstractTest;
-import org.vaadin.viritin.layouts.MVerticalLayout;
 
-import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.*;
 import com.vaadin.ui.MenuBar.MenuItem;
 
@@ -34,6 +32,8 @@ public class MenuDemo extends AbstractTest {
         hots.addItem("Coffee", null, mycommand);
         MenuItem servs = barmenu.addItem("Services", null, mycommand);
         servs.addItem("Car Service", null, mycommand);
-        return new MVerticalLayout(barmenu, selection).withFullHeight();
+        VerticalLayout vl = new VerticalLayout(barmenu, selection);
+        vl.setSizeFull();
+        return vl;
     }
 }

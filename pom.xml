@@ -9,7 +9,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <vaadin.version>7.6.8</vaadin.version>
+        <vaadin.version>8.0.0.beta1</vaadin.version>
         <vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
 
         <!-- ZIP Manifest fields -->
@@ -51,6 +51,10 @@
                 <enabled>true</enabled>
             </snapshots>
         </repository>
+        <repository>
+            <id>vaadin-prereleases</id>
+            <url>https://maven.vaadin.com/vaadin-prereleases</url>
+        </repository>
     </repositories>
 
     <pluginRepositories>
@@ -69,7 +73,7 @@
     <dependencies>
         <dependency>
             <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-server</artifactId>
+            <artifactId>vaadin-compatibility-server</artifactId>
             <version>${vaadin.version}</version>
             <scope>provided</scope>
         </dependency>
@@ -80,13 +84,13 @@
             <artifactId>junit</artifactId>
             <version>4.12</version>
         </dependency>
-        <dependency>
+        <!--        <dependency>
             <groupId>org.vaadin</groupId>
             <artifactId>viritin</artifactId>
             <version>1.55</version>
             <scope>test</scope>
             <type>jar</type>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
@@ -114,7 +118,7 @@
         <!-- Needed to run the demos and tests -->
         <dependency>
             <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-client-compiled</artifactId>
+            <artifactId>vaadin-compatibility-client-compiled</artifactId>
             <version>${vaadin.version}</version>
             <scope>test</scope>
         </dependency>
@@ -132,17 +136,17 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.0</version>
+                <version>3.6.0</version>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>2.3.1</version>
+                <version>3.0.2</version>
                 <configuration>
                     <archive>
                         <manifest>
@@ -157,13 +161,12 @@
                     </archive>
                 </configuration>
 
-
             </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.9</version>
+                <version>2.10.4</version>
                 <executions>
                     <execution>
                         <id>attach-javadoc</id>
@@ -177,7 +180,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>2.2.1</version>
+                <version>3.0.1</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -191,7 +194,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>2.6</version>
+                <version>3.0.0</version>
                 <configuration>
                     <appendAssemblyId>false</appendAssemblyId>
                     <descriptors>

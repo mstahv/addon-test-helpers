@@ -1,9 +1,9 @@
 package org.vaadin.addonhelpers.manual.demo;
 
+import com.vaadin.ui.Component;
 import org.vaadin.addonhelpers.AbstractTest;
-import org.vaadin.viritin.layouts.MVerticalLayout;
 
-import com.vaadin.ui.*;
+import com.vaadin.v7.ui.*;
 
 public class OptionGroupDemo extends AbstractTest {
 
@@ -22,6 +22,6 @@ public class OptionGroupDemo extends AbstractTest {
         multi.setItemEnabled("Monta", false);
         multi.setId("multi-optiongroup");
 
-        return new MVerticalLayout(single, multi);
+        return new VerticalLayout(single, multi);
     }
 }
