@@ -148,15 +148,6 @@
             			</goals>
         			</execution>
     			</executions>
-    			<configuration>
-    				<drivers>
-    					 <driver>
-                			<name>geckodriver</name>
-                			<platform>linux</platform>
-                			<bit>64</bit>
-            			</driver>
-    				</drivers>
-    			</configuration>
 			</plugin>	
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
