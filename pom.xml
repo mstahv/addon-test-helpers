@@ -97,7 +97,7 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>2.53.0</version>
+            <version>3.0.1</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.seleniumhq.selenium</groupId>
@@ -124,11 +124,36 @@
             <version>${vaadin.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+   			<groupId>com.github.webdriverextensions</groupId>
+    		<artifactId>webdriverextensions</artifactId>
+    		<version>3.0.1</version>
+		</dependency>
     </dependencies>
 
     <build>
         <plugins>
-
+			<plugin>
+    			<groupId>com.github.webdriverextensions</groupId>
+    			<artifactId>webdriverextensions-maven-plugin</artifactId>
+    			<version>3.1.1</version>
+    			<executions>
+        			<execution>
+            			<goals>
+                			<goal>install-drivers</goal>
+            			</goals>
+        			</execution>
+    			</executions>
+    			<configuration>
+    				<drivers>
+    					 <driver>
+                			<name>geckodriver</name>
+                			<platform>linux</platform>
+                			<bit>64</bit>
+            			</driver>
+    				</drivers>
+    			</configuration>
+			</plugin>	
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -221,6 +246,38 @@
             </plugin>
         </plugins>
 
+		<pluginManagement>
+			<plugins>
+				<!--Eclipse m2e settings needed to install drivers with the webdriverextensions-maven-plugin -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>com.github.webdriverextensions</groupId>
+										<artifactId>webdriverextensions-maven-plugin</artifactId>
+										<versionRange>[1.0,)</versionRange>
+										<goals>
+											<goal>install-drivers</goal>
+										</goals>
+										</pluginExecutionFilter>
+										<action>
+											<execute>
+												<runOnIncremental>true</runOnIncremental>
+											</execute>
+										</action>
+									</pluginExecution>
+								</pluginExecutions>
+							</lifecycleMappingMetadata>
+						</configuration>
+					</plugin>
+				</plugins>
+		</pluginManagement>
+		
         <!-- This is needed for the sources required by the client-side compiler 
         to be included in the produced JARs -->
         <resources>
