@@ -1,15 +1,26 @@
 package org.vaadin.addonhelpers.automated;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
 
-import org.apache.commons.lang3.StringUtils;
 import org.eclipse.jetty.server.Server;
-import org.junit.*;
+import org.junit.After;
+import org.junit.Rule;
 import org.junit.rules.MethodRule;
-import org.junit.runners.model.*;
-import org.openqa.selenium.*;
+import org.junit.runners.model.FrameworkMethod;
+import org.junit.runners.model.Statement;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.*;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import com.github.webdriverextensions.WebDriverExtensionsContext;
+import com.github.webdriverextensions.internal.junitrunner.DriverPathLoader;
 
 /**
  * Base class for webDriver test. If you need a local test server use
@@ -25,6 +36,7 @@ public class AbstractBaseWebDriverCase {
 
     public AbstractBaseWebDriverCase() {
         super();
+        DriverPathLoader.loadDriverPaths(null);
     }
 
     @After
@@ -50,6 +62,7 @@ public class AbstractBaseWebDriverCase {
             this.driver.quit();
         }
         this.driver = driver;
+        WebDriverExtensionsContext.setDriver(driver);
     }
 
     protected void clickNotification() {
@@ -69,6 +82,7 @@ public class AbstractBaseWebDriverCase {
         sleep(1000);
         // driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
         (new WebDriverWait(driver, 20)).until(new ExpectedCondition<Boolean>() {
+            @Override
             public Boolean apply(WebDriver d) {
                 boolean stopWait = false;
                 try {
@@ -96,6 +110,7 @@ public class AbstractBaseWebDriverCase {
     }
 
     class ScreenshotTestRule implements MethodRule {
+        @Override
         public Statement apply(final Statement statement,
                 final FrameworkMethod frameworkMethod, final Object o) {
             return new Statement() {
