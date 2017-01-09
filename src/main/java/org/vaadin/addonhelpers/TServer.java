@@ -54,8 +54,6 @@ public class TServer {
         Widgetset annotation = loadWidgetsetAnnotation();
         if (annotation != null) {
             servletHolder.setInitParameter("widgetset", annotation.value());
-        } else {
-            servletHolder.setInitParameter("widgetset", "com.vaadin.v7.Vaadin7WidgetSet");
         }
 
         File file = new File(webAppPath);
