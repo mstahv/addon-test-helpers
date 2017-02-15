@@ -95,7 +95,10 @@ public class TListUi extends UI {
         filter.setPlaceholder("Filter list");
         filter.addValueChangeListener(e -> {
             String f = e.getValue();
-            grid.setItems(testClassess.stream().filter(c -> c.getName().contains(f)));
+            grid.setItems(testClassess.stream().filter(
+                    c -> (c.getName() + c.getDescription()).toLowerCase()
+                            .contains(f.toLowerCase())
+            ));
         });
         filter.setValueChangeMode(ValueChangeMode.LAZY);
         verticalLayout.addComponent(filter);
