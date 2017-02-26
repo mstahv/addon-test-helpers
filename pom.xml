@@ -9,7 +9,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <vaadin.version>8.0.0.beta1</vaadin.version>
+        <vaadin.version>8.0.0</vaadin.version>
         <vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
 
         <!-- ZIP Manifest fields -->
@@ -118,7 +118,7 @@
         <!-- Needed to run the demos and tests -->
         <dependency>
             <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-compatibility-client-compiled</artifactId>
+            <artifactId>vaadin-client-compiled</artifactId>
             <version>${vaadin.version}</version>
             <scope>test</scope>
         </dependency>

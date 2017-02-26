@@ -67,6 +67,7 @@ public class TServer {
         configure(context, server);
         server.setHandler(context);
         server.start();
+        server.dumpStdErr();
         return server;
     }
 
