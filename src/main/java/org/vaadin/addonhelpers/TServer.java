@@ -18,6 +18,8 @@ import com.vaadin.server.SessionInitEvent;
 import com.vaadin.server.SessionInitListener;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.server.VaadinServletService;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class TServer {
 
@@ -39,6 +41,8 @@ public class TServer {
     }
 
     public Server startServer(int port) throws Exception {
+        Logger.getLogger(TServer.class.getName()).
+                log(Level.INFO, "Starting test server to port " + port);
 
         Server server = new Server();
 
@@ -67,7 +71,6 @@ public class TServer {
         configure(context, server);
         server.setHandler(context);
         server.start();
-        server.dumpStdErr();
         return server;
     }
 
@@ -77,8 +80,8 @@ public class TServer {
     }
 
     protected Widgetset loadWidgetsetAnnotation() {
-        Widgetset widgetset =  this.getClass().getAnnotation(Widgetset.class);
-        if(widgetset == null) {
+        Widgetset widgetset = this.getClass().getAnnotation(Widgetset.class);
+        if (widgetset == null) {
             try {
                 Class<?> configClass = this.getClass().getClassLoader().loadClass("org.vaadin.addonhelpers.Config");
                 widgetset = configClass.getAnnotation(Widgetset.class);
@@ -109,7 +112,7 @@ public class TServer {
 
     /**
      * Hook to add additional configuration for VaadinServletService
-     * 
+     *
      * @param service the VaadinServletService
      */
     protected void configureVaadinService(
