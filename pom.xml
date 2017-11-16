@@ -6,6 +6,10 @@
     <packaging>jar</packaging>
     <version>2.1-SNAPSHOT</version>
     <name>Addon test helpers</name>
+    
+    <organization>
+        <name>Matti Tahvonen</name>
+    </organization>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
