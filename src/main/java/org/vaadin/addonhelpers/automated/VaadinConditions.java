@@ -1,8 +1,7 @@
 package org.vaadin.addonhelpers.automated;
 
-import org.openqa.selenium.*;
-
-import com.google.common.base.Predicate;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
 
 public class VaadinConditions {
     private static final long BROWSER_RENDERING_MS = 10;
@@ -13,24 +12,19 @@ public class VaadinConditions {
      * <p>
      * Taken, and fixed, from the (german) book "Vaadin".
      *
+     * @param driver the web driver
      * @return the waiting condition
      * @see <a href="https://www.dpunkt.de/buecher/4526/vaadin.html">(german)
      *      Book: Vaadin</a>
      *
      */
-    public static Predicate<WebDriver> ajaxCallsCompleted() {
-        return new Predicate<WebDriver>() {
-            @Override
-            public boolean apply(WebDriver driver) {
-                if (isVaadinActive(driver)) {
-                    return true;
-                } else {
-                    ensureBrowserRenderingTookPlace();
-                    return false;
-                }
-            }
-
-        };
+    public static boolean ajaxCallsCompleted(WebDriver driver) {
+        if (isVaadinActive(driver)) {
+            return true;
+        } else {
+            ensureBrowserRenderingTookPlace();
+            return false;
+        }
     }
 
     protected static boolean isVaadinActive(WebDriver driver) {

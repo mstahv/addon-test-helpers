@@ -9,7 +9,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <vaadin.version>8.0.0</vaadin.version>
+        <vaadin.version>8.1.6</vaadin.version>
         <vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
 
         <!-- ZIP Manifest fields -->
@@ -19,8 +19,10 @@
         <Implementation-Vendor>${project.organization.name}</Implementation-Vendor>
         <Vaadin-License-Title>Apache License 2.0</Vaadin-License-Title>
         <Vaadin-Addon>${artifactId}-${project.version}.jar</Vaadin-Addon>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
-
+    
     <scm>
         <url>git://github.com/mstahv/addon-test-helpers.git</url>
         <connection>scm:git:git://github.com/mstahv/addon-test-helpers.git</connection>
@@ -76,6 +78,12 @@
             <artifactId>vaadin-compatibility-server</artifactId>
             <version>${vaadin.version}</version>
             <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.vaadin</groupId>
+                    <artifactId>vaadin-sass-compiler</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- This can be replaced with TestNG or some other test framework supported 
         by the surefire plugin -->
@@ -94,25 +102,26 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.4</version>
+            <version>3.7</version>
         </dependency>
 
         <!-- Open source alternative to TestBench -->
-        <dependency>
+<!--        <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>3.0.1</version>
+            <version>3.7.1</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.seleniumhq.selenium</groupId>
                     <artifactId>selenium-htmlunit-driver</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-webapp</artifactId>
-            <version>9.2.6.v20141205</version>
+            <!-- To avoid conflicts, this is aligned to jetty dependencies by selenium java -->
+            <version>9.4.5.v20170502</version>
         </dependency>
 
         <!-- Needed to run the demos and tests -->
@@ -129,36 +138,33 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-   			<groupId>com.github.webdriverextensions</groupId>
-    		<artifactId>webdriverextensions</artifactId>
-    		<version>3.0.1</version>
-		</dependency>
+            <groupId>com.github.webdriverextensions</groupId>
+            <artifactId>webdriverextensions</artifactId>
+            <version>3.7.0</version>
+        </dependency>
     </dependencies>
 
     <build>
         <plugins>
-			<plugin>
-    			<groupId>com.github.webdriverextensions</groupId>
-    			<artifactId>webdriverextensions-maven-plugin</artifactId>
-    			<version>3.1.1</version>
-    			<executions>
-        			<execution>
-            			<goals>
-                			<goal>install-drivers</goal>
-            			</goals>
-        			</execution>
-    			</executions>
-			</plugin>	
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.6.0</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
-
+                <groupId>com.github.webdriverextensions</groupId>
+                <artifactId>webdriverextensions-maven-plugin</artifactId>
+                <version>3.1.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>install-drivers</goal>
+                        </goals>
+                        <configuration>
+                            <drivers>
+                                <driver>
+                                    <name>phantomjs</name>
+                                </driver>
+                            </drivers>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>	
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -240,37 +246,37 @@
             </plugin>
         </plugins>
 
-		<pluginManagement>
-			<plugins>
-				<!--Eclipse m2e settings needed to install drivers with the webdriverextensions-maven-plugin -->
-				<plugin>
-					<groupId>org.eclipse.m2e</groupId>
-					<artifactId>lifecycle-mapping</artifactId>
-					<version>1.0.0</version>
-					<configuration>
-						<lifecycleMappingMetadata>
-							<pluginExecutions>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>com.github.webdriverextensions</groupId>
-										<artifactId>webdriverextensions-maven-plugin</artifactId>
-										<versionRange>[1.0,)</versionRange>
-										<goals>
-											<goal>install-drivers</goal>
-										</goals>
-										</pluginExecutionFilter>
-										<action>
-											<execute>
-												<runOnIncremental>true</runOnIncremental>
-											</execute>
-										</action>
-									</pluginExecution>
-								</pluginExecutions>
-							</lifecycleMappingMetadata>
-						</configuration>
-					</plugin>
-				</plugins>
-		</pluginManagement>
+        <pluginManagement>
+            <plugins>
+                <!--Eclipse m2e settings needed to install drivers with the webdriverextensions-maven-plugin -->
+                <plugin>
+                    <groupId>org.eclipse.m2e</groupId>
+                    <artifactId>lifecycle-mapping</artifactId>
+                    <version>1.0.0</version>
+                    <configuration>
+                        <lifecycleMappingMetadata>
+                            <pluginExecutions>
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>com.github.webdriverextensions</groupId>
+                                        <artifactId>webdriverextensions-maven-plugin</artifactId>
+                                        <versionRange>[1.0,)</versionRange>
+                                        <goals>
+                                            <goal>install-drivers</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <execute>
+                                            <runOnIncremental>true</runOnIncremental>
+                                        </execute>
+                                    </action>
+                                </pluginExecution>
+                            </pluginExecutions>
+                        </lifecycleMappingMetadata>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
 		
         <!-- This is needed for the sources required by the client-side compiler 
         to be included in the produced JARs -->

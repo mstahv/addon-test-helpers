@@ -1,6 +1,8 @@
 package org.vaadin.addonhelpers.automated;
 
-import org.openqa.selenium.*;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.vaadin.addonhelpers.components.VaadinComboBox;
@@ -38,7 +40,7 @@ public class ComboBoxDemoPage {
         getVaadinComboBox().getInput().clear();
         getVaadinComboBox().typeText(text);
         new WebDriverWait(driver, 30)
-                .until(VaadinConditions.ajaxCallsCompleted());
+                .until(VaadinConditions::ajaxCallsCompleted);
         if (pressEnter) {
             getVaadinComboBox().getInput().sendKeys(Keys.ENTER);
         }
@@ -74,7 +76,7 @@ public class ComboBoxDemoPage {
         getVaadinComboBox2().getInput().clear();
         getVaadinComboBox2().typeText(text);
         new WebDriverWait(driver, 30)
-                .until(VaadinConditions.ajaxCallsCompleted());
+                .until(VaadinConditions::ajaxCallsCompleted);
         getVaadinComboBox2().getInput().sendKeys(Keys.ENTER);
 
     }

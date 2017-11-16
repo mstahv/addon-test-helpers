@@ -53,8 +53,7 @@ public class TestMultiBrowsers extends AbstractWebDriverCase {
 
         simpleDemoPage.clickButton();
 
-        new WebDriverWait(driver, 30).until(VaadinConditions
-                .ajaxCallsCompleted());
+        new WebDriverWait(driver, 30).until(VaadinConditions::ajaxCallsCompleted);
 
         assertThat(simpleDemoPage.getLabelText(), is("ON"));
     }

@@ -23,7 +23,7 @@ public class TestComboBoxDemo extends AbstractWebDriverCase {
         comboBoxDemoPage = PageFactory.initElements(driver,
                 ComboBoxDemoPage.class);
         new WebDriverWait(driver, 30)
-                .until(VaadinConditions.ajaxCallsCompleted());
+                .until(VaadinConditions::ajaxCallsCompleted);
     }
 
     @Test
@@ -33,13 +33,13 @@ public class TestComboBoxDemo extends AbstractWebDriverCase {
 
         comboBoxDemoPage.selectItem(2);
         new WebDriverWait(driver, 30)
-                .until(VaadinConditions.ajaxCallsCompleted());
+                .until(VaadinConditions::ajaxCallsCompleted);
         assertThat(comboBoxDemoPage.getComboBoxValue(), is("Value 1"));
         assertThat(comboBoxDemoPage.getLabelText(), is("Value 1"));
 
         comboBoxDemoPage.enterText("Value 20", true);
         new WebDriverWait(driver, 30)
-                .until(VaadinConditions.ajaxCallsCompleted());
+                .until(VaadinConditions::ajaxCallsCompleted);
         assertThat(comboBoxDemoPage.getComboBoxValue(), is("Value 20"));
         assertThat(comboBoxDemoPage.getLabelText(), is("Value 20"));
 
@@ -53,7 +53,7 @@ public class TestComboBoxDemo extends AbstractWebDriverCase {
         comboBoxDemoPage.selectItem(1);
 
         new WebDriverWait(driver, 30)
-                .until(VaadinConditions.ajaxCallsCompleted());
+                .until(VaadinConditions::ajaxCallsCompleted);
         assertThat(comboBoxDemoPage.getLabelText(), is("Value 90"));
         assertThat(comboBoxDemoPage.getComboBoxValue(), is("Value 90"));
     }

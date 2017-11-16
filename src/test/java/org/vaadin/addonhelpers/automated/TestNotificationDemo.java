@@ -22,8 +22,8 @@ public class TestNotificationDemo extends AbstractWebDriverCase {
                 "http://localhost:5678/" + NotificationDemo.class.getName());
 
         page = PageFactory.initElements(driver, NotificationDemoPage.class);
-        new WebDriverWait(driver, 30).until(VaadinConditions
-                .ajaxCallsCompleted());
+        
+        new WebDriverWait(driver, 30).until(VaadinConditions::ajaxCallsCompleted);
         List<VaadinNotification> warnings = VaadinNotification.get(
                 VaadinNotification.Type.WARNING_MESSAGE, driver);
         warnings.get(0).click(); // Message when opening demo page

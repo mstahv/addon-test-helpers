@@ -69,8 +69,7 @@ public class TestSlowUIDemo extends AbstractWebDriverCase {
 
         page.clickSlowButton();
 
-        new WebDriverWait(driver, 30).until(VaadinConditions
-                .ajaxCallsCompleted());
+        new WebDriverWait(driver, 30).until(VaadinConditions::ajaxCallsCompleted);
 
         assertThat(page.getLabelText(), is("42"));
     }
@@ -98,8 +97,7 @@ public class TestSlowUIDemo extends AbstractWebDriverCase {
 
         page.clickFastButton();
 
-        new WebDriverWait(driver, 30).until(VaadinConditions
-                .ajaxCallsCompleted());
+        new WebDriverWait(driver, 30).until(VaadinConditions::ajaxCallsCompleted);
 
         assertThat(page.getLabelText(), is("42"));
     }

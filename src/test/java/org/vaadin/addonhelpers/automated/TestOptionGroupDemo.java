@@ -23,8 +23,7 @@ public class TestOptionGroupDemo extends AbstractWebDriverCase {
                 "http://localhost:5678/" + OptionGroupDemo.class.getName());
 
         page = PageFactory.initElements(driver, OptionGroupPage.class);
-        new WebDriverWait(driver, 30).until(VaadinConditions
-                .ajaxCallsCompleted());
+        new WebDriverWait(driver, 30).until(VaadinConditions::ajaxCallsCompleted);
     }
 
     @Test
